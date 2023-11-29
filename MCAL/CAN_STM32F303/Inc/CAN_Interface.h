@@ -63,7 +63,7 @@ void HAL_CAN_vInit(S_CAN_INIT_CONFIG* initConfig);
  * in/out arg: pointer to a byte location that should be updated by the function
  * retval: void
  */
-void HAL_CAN_pu8TXFRAME(S_CAN_INIT_CONFIG* initConfig,S_CAN_TXFRAME* TX_FRAME, uint32_t DATA[], uint8_t* MAILBOX_CODE);
+void HAL_CAN_pu8TXFRAME(S_CAN_INIT_CONFIG* initConfig,S_CAN_TXFRAME* TX_FRAME, uint8_t DATA[], uint8_t* MAILBOX_CODE);
 /*
  * brief: Abort a requested Frame to be transmitted
  * param: the code of the mailbox carrying the massage to be aborted
@@ -83,5 +83,34 @@ void HAL_CAN_u8GetFreeMailbox(uint8_t* FREE_MAILBOX_COUNT);
  * retval: void
  */
 void HAL_CAN_u8IS_TXFRAME_PENDING(uint8_t* pendingStatus,uint8_t MAILBOX_CODE);
-
+/*
+ * brief: locks the latest FIFO mailbox and the recent massage will be discarded in case of OVERRUN
+ * parameter: void
+ * retval: void
+ */
+void HAL_CAN_RX_FIFO_LOCKING();
+/*
+ * brief: delocks the latest FIFO mailbox and the recent massage will be replace it in case of OVERRUN
+ * parameter: void
+ * retval: void
+ */
+void HAL_CAN_RX_FIFO_DELOCKING();
+/*
+ * @brief  Configures the CAN reception filter according to the specified
+ *         parameters in the s_framexConfig structure.
+ * @param  FRAMEX_CONFIG pointer to a s_framexConfig structure that
+ *         contains the filter configuration information.
+ * @retval None
+ */
+void HAL_CAN_FILTER_CONFIG(s_framexConfig* FRAMEX_CONFIG);
+/*
+ * @brief       Receive frame from RX_FIFO Queue
+ * @param  		RX_FIFO to specify which FIFO Queue to receive from
+ * @in/out arg  RX_FRAME to store the received frame
+ * @in/out arg	DATA[] array to store the data received
+ * @retval None
+ */
+void HAL_CAN_psRXFRAME(S_CAN_RXFRAME* RX_FRAME, uint8_t DATA[],E_FILTER_ASSIGN RX_FIFO);
+void HAL_CAN_RX_FRAMES_NUM(E_FILTER_ASSIGN RX_FIFO,uint8_t FRAMES_NUM);
+void HAL_CAN_p8CHECK_TXCOMPLETION(uint8_t* status,uint8_t MAILBOX_CODE);
 #endif /* INC_CAN_INTERFACE_H_ */

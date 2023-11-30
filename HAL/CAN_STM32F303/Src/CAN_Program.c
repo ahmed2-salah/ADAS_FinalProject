@@ -10,7 +10,7 @@
 CAN_TypeDef*  CAN_INSTANCE= CAN;	//ASSIGN CAN BASE ADDRESS
 
 
-void HAL_CAN_ENTER_SLEEP_MODE(void)
+static void HAL_CAN_ENTER_SLEEP_MODE(void)
 {
 	SET_BIT(CAN_INSTANCE->MCR,CAN_MCR_SLEEP);
 	while((READ_BIT(CAN_INSTANCE->MSR,CAN_MSR_SLAK)>>CAN_MSR_SLAK_Pos)==LOW);
@@ -26,7 +26,7 @@ void HAL_CAN_LEAVE_SLEEP_MODE(void)
 
 
 
-void HAL_CAN_ENTER_INIT_MODE(void)
+static void HAL_CAN_ENTER_INIT_MODE(void)
 {
 
 	//for software initialization
@@ -57,24 +57,28 @@ void HAL_CAN_vsetbiTime(S_CAN_BITIME_CONFIG* bitime)
 	WRITE_REG(CAN_INSTANCE->BTR,((CAN_INSTANCE->BTR&0XFF000000)|(uint32_t)(bitime->prescaler<<CAN_BTR_BRP_Pos)|(uint32_t)(bitime->TS1_Qunata<<CAN_BTR_TS1_Pos)|(uint32_t)(bitime->TS2_Qunata<<CAN_BTR_TS2_Pos)));
 };
 
-
-
-void HAL_CAN_vInit(S_CAN_INIT_CONFIG* initConfig)
+void HAL_CAN_vDebugMode(S_CAN_INIT_CONFIG* initConfig)
 {
+	HAL_CAN_ENTER_INIT_MODE();
 	switch((initConfig->debugMode))
-	{
-	case SILENT_MODE:SET_BIT(CAN_INSTANCE->BTR,CAN_BTR_SILM);
-		   CLEAR_BIT(CAN_INSTANCE->BTR,CAN_BTR_LBKM);
-		   break;
-	case LOOPBACK_MODE:CLEAR_BIT(CAN_INSTANCE->BTR,CAN_BTR_SILM);
-		   SET_BIT(CAN_INSTANCE->BTR,CAN_BTR_LBKM);
-		   break;
-	case LOOPBACK_SILENT_MODE:SET_BIT(CAN_INSTANCE->BTR,CAN_BTR_SILM);
-		   SET_BIT(CAN_INSTANCE->BTR,CAN_BTR_LBKM);
-		   break;
-	default:
-			break;
-	}
+		{
+		case SILENT_MODE:SET_BIT(CAN_INSTANCE->BTR,CAN_BTR_SILM);
+			   	   	   	 CLEAR_BIT(CAN_INSTANCE->BTR,CAN_BTR_LBKM);
+			   	   	   	 break;
+		case LOOPBACK_MODE:CLEAR_BIT(CAN_INSTANCE->BTR,CAN_BTR_SILM);
+						   SET_BIT(CAN_INSTANCE->BTR,CAN_BTR_LBKM);
+						   break;
+		case LOOPBACK_SILENT_MODE:SET_BIT(CAN_INSTANCE->BTR,CAN_BTR_SILM);
+								  SET_BIT(CAN_INSTANCE->BTR,CAN_BTR_LBKM);
+								  break;
+		default:
+				break;
+		}
+}
+
+void HAL_CAN_vInit(S_CAN_INIT_CONFIG* initConfig,S_CAN_BITIME_CONFIG* bitime)
+{
+	HAL_CAN_ENTER_INIT_MODE();
 /**************************************************************/
 	if(!initConfig->IDENTIFIER_PRIORITY)//FIFO Priority
 	{
@@ -117,11 +121,19 @@ void HAL_CAN_vInit(S_CAN_INIT_CONFIG* initConfig)
 	{
 		SET_BIT(CAN_INSTANCE->MCR,CAN_MCR_TTCM);
 	}
+	else
+	{
+		CLEAR_BIT(CAN_INSTANCE->MCR,CAN_MCR_TTCM);
+	}
+	HAL_CAN_vsetbiTime(bitime);
 }
 
-
-
-
+void HAL_CAN_start(void)
+{
+	//ENTER THE NORMAL MODE
+	HAL_CAN_LEAVE_INIT_MODE();
+	HAL_CAN_LEAVE_SLEEP_MODE();
+}
 void HAL_CAN_pu8TXFRAME(S_CAN_INIT_CONFIG* initConfig,S_CAN_TXFRAME* TX_FRAME, uint8_t DATA[], uint8_t* MAILBOX_CODE)
 {
 	//CHECK IF ANY MAILBOX IS EMPTY
@@ -182,14 +194,14 @@ void HAL_CAN_pu8TXFRAME(S_CAN_INIT_CONFIG* initConfig,S_CAN_TXFRAME* TX_FRAME, u
 }
 
 void HAL_CAN_p8CHECK_TXCOMPLETION(uint8_t* status,uint8_t MAILBOX_CODE)
-{	status=1;
+{	*status=1;
 	if(MAILBOX_CODE==0)
 	{
 		while(READ_BIT(CAN_INSTANCE->TSR,CAN_TSR_RQCP0)==1UL);
 		if(READ_BIT(CAN_INSTANCE->TSR,CAN_TSR_TXOK0)!=1UL)
 		{
 			//TRANSMISSION FAILED
-			status=0;
+			*status=0;
 			if(READ_BIT(CAN_INSTANCE->TSR,CAN_TSR_ALST0))
 			{
 				//ARBITRATION LOSS
@@ -305,7 +317,7 @@ void HAL_CAN_RX_FIFO_DELOCKING()
 {
 	CLEAR_BIT(CAN_INSTANCE->MCR,CAN_MCR_RFLM);
 }
-void HAL_CAN_FILTER_CONFIG(s_framexConfig* FRAMEX_CONFIG)
+void HAL_CAN_FILTER_CONFIG(s_filterxConfig* FRAMEX_CONFIG)
 {
 	if(FRAMEX_CONFIG->filterBank<=13UL)
 	{
@@ -333,8 +345,10 @@ void HAL_CAN_FILTER_CONFIG(s_framexConfig* FRAMEX_CONFIG)
 		}
 		/*****************************************************************************/
 		//SET FILTER SCALE
+
 		if(FRAMEX_CONFIG->filterxScale==DUAL_16)
-		{
+		{	//shift by HIGH<<5 in case of STD_ID
+			//shift by
 			CLEAR_BIT(CAN_INSTANCE->FS1R,filterIndexMsk);
 			//assign mask or identifier code based on your assigned FILTRATION MODE
 			CAN_INSTANCE->sFilterRegister[FRAMEX_CONFIG->filterBank].FR1=(((uint32_t)FRAMEX_CONFIG->MSG_ID_MASK_LOW&0X0000FFFF)<<16UL)|((uint32_t)FRAMEX_CONFIG->MSG_ID_LOW&0X0000FFFF);
@@ -342,7 +356,8 @@ void HAL_CAN_FILTER_CONFIG(s_framexConfig* FRAMEX_CONFIG)
 
 		}
 		else if(FRAMEX_CONFIG->filterxScale==SINGLE_32)
-		{
+		{	//shift by HIGH<<5 in case of STD_ID
+			//shift by LOW<<3 in case of EXT_ID
 			SET_BIT(CAN_INSTANCE->FS1R,filterIndexMsk);
 			//assign mask or identifier code based on your assigned FILTRATION MODE
 			CAN_INSTANCE->sFilterRegister[FRAMEX_CONFIG->filterBank].FR1=(((uint32_t)FRAMEX_CONFIG->MSG_ID_HIGH&0X0000FFFF)<<16UL)|((uint32_t)FRAMEX_CONFIG->MSG_ID_LOW&0X0000FFFF);
@@ -434,7 +449,7 @@ void HAL_CAN_psRXFRAME(S_CAN_RXFRAME* RX_FRAME, uint8_t DATA[],E_FILTER_ASSIGN R
     }
 }
 
-void HAL_CAN_RX_FRAMES_NUM(E_FILTER_ASSIGN RX_FIFO,uint8_t FRAMES_NUM)
+void HAL_CAN_RX_FRAMES_NUM(E_FILTER_ASSIGN RX_FIFO,uint8_t* FRAMES_NUM)
 {
 	FRAMES_NUM=0;
 	if(RX_FIFO==FIFO0)

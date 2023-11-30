@@ -16,43 +16,52 @@
 #define HIGH	1
 #define LOW		0
 /*
+ * brief: Enter the normal mode to have access on the CAN bus
+ * called after the initialization or debug mode or to leave sleep mode to normal mode
+ * param: void
+ * retval: void
+ */
+void HAL_CAN_start(void);
+/*
  * brief:set the SLEEP mode configuration
  * param: void
  * retval: void
  */
-void HAL_CAN_ENTER_SLEEP_MODE(void);
+static void HAL_CAN_ENTER_SLEEP_MODE(void);
 /*
  * brief: clear the SLEEP mode configuration
  * param: void
  * retval: void
  */
-void HAL_CAN_LEAVE_SLEEP_MODE(void);
+static void HAL_CAN_LEAVE_SLEEP_MODE(void);
 /*
  * brief: set the Initialization mode configuration
  * param: void
  * retval: void
  */
-void HAL_CAN_ENTER_INIT_MODE(void);
+static void HAL_CAN_ENTER_INIT_MODE(void);
 /*
  * brief: clear the Initialization mode configuration
  * param: void
  * retval: void
  */
-void HAL_CAN_LEAVE_INIT_MODE(void);
+static void HAL_CAN_LEAVE_INIT_MODE(void);
 /*
  * brief: set bit Time
  * param: a pointer to  S_CAN_BITIME_CONFIG structure that contains
  * 		  bit time CAN clk configuration
  * retval: void
  */
-void HAL_CAN_vsetbiTime(S_CAN_BITIME_CONFIG* bitime);
+static void HAL_CAN_vsetbiTime(S_CAN_BITIME_CONFIG* bitime);
 /*
  * brief: SET THE INITIALIZATION CONFIGURATION
  * param: a pointer to  S_CAN_INIT_CONFIG structure that contains
  * 		  CAN initialization configuration
+ * param: a pointer to  S_CAN_BITIME_CONFIG structure that contains
+ * 		  bit time CAN clk configuration
  * retval: void
  */
-void HAL_CAN_vInit(S_CAN_INIT_CONFIG* initConfig);
+void HAL_CAN_vInit(S_CAN_INIT_CONFIG* initConfig,S_CAN_BITIME_CONFIG* bitime);
 /*
  * brief: PREPARE THE TX FRAME
  * parameter: a pointer to  S_CAN_INIT_CONFIG structure that contains
@@ -102,7 +111,7 @@ void HAL_CAN_RX_FIFO_DELOCKING();
  *         contains the filter configuration information.
  * @retval None
  */
-void HAL_CAN_FILTER_CONFIG(s_framexConfig* FRAMEX_CONFIG);
+void HAL_CAN_FILTER_CONFIG(s_filterxConfig* FRAMEX_CONFIG);
 /*
  * @brief       Receive frame from RX_FIFO Queue
  * @param  		RX_FIFO to specify which FIFO Queue to receive from
@@ -111,6 +120,26 @@ void HAL_CAN_FILTER_CONFIG(s_framexConfig* FRAMEX_CONFIG);
  * @retval None
  */
 void HAL_CAN_psRXFRAME(S_CAN_RXFRAME* RX_FRAME, uint8_t DATA[],E_FILTER_ASSIGN RX_FIFO);
-void HAL_CAN_RX_FRAMES_NUM(E_FILTER_ASSIGN RX_FIFO,uint8_t FRAMES_NUM);
+/*
+ * brief: check the number of frames in RX_FIFO Queue
+ * param: RX_FIFO the used FIFO Queue in the Receiver
+ * in/out:FRAMES_NUM the returned value of stored frames in the RX_FIFO
+ * retval: void
+ */
+void HAL_CAN_RX_FRAMES_NUM(E_FILTER_ASSIGN RX_FIFO,uint8_t* FRAMES_NUM);
+/*
+ * brief: TX transmission completion check
+ * param: MAILBOX_CODE the mailbox number used to transmit the message
+ * in/out:status is the returned status 1 for the completion/0 for the failure
+ * retval: void
+ */
 void HAL_CAN_p8CHECK_TXCOMPLETION(uint8_t* status,uint8_t MAILBOX_CODE);
+/*
+ * brief: entering a debug mode(SILENT, LOOPBACK, LOOPBACK AND SILENT)
+ * it enters the init mode and it needs to enter the normal mode to have access on the CAN bus
+ * param: initConfig carries the required debug mode
+ * retval: void
+ */
+void HAL_CAN_vDebugMode(S_CAN_INIT_CONFIG* initConfig);
+
 #endif /* INC_CAN_INTERFACE_H_ */

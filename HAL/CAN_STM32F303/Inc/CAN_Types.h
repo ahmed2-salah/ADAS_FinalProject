@@ -88,7 +88,7 @@ typedef struct
 	uint16_t MSG_ID_LOW;
 	uint16_t MSG_ID_HIGH;
 	uint32_t filterBank;//you have 14 (0~13)bank each composed of 2 32_bit registers
-}s_framexConfig;
+}s_filterxConfig;
 
 typedef struct
 {

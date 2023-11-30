@@ -11,8 +11,8 @@
 #include "CAN_Types.h"
 #include "CAN_Private.h"
 
-#define TS1_Q	8
-#define TS2_Q	1
+#define TS1_Q	1
+#define TS2_Q	2
 #define HIGH	1
 #define LOW		0
 /*

@@ -19,10 +19,10 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include <main.h>
-#include "...\Source Group 1\CAN_Interface.h"
+#include "CAN_Interface.h"
 
 
-S_CAN_BITIME_CONFIG CAN_BITIME={PRESCALER_1,TS1_Q,TS2_Q};
+S_CAN_BITIME_CONFIG CAN_BITIME={PRESCALER_128,TS1_Q,TS2_Q};
 S_CAN_INIT_CONFIG initConfig={SILENT_MODE,ENABLE,DISABLE,DISABLE,ENABLE,DISABLE};
 S_CAN_TXFRAME TX_FRAME={STD_ID,0x123/*0b001 0010 0011*/,NULL,0,1,DISABLE};
 s_filterxConfig filterxConfig={MSK_MODE,SINGLE_32,FIFO0,0x0000,0x123<<5,0x0000,0x123<<5,10};

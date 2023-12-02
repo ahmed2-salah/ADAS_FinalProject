@@ -1,0 +1,106 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.34.0.0
+Copyright (C) 2021 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Merna Magdy, -, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.34.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.16
+Assembler:       Armasm.exe V6.16
+Linker/Locator:  ArmLink.exe V6.16
+Library Manager: ArmAr.exe V6.16
+Hex Converter:   FromElf.exe V6.16
+CPU DLL:         SARMCM3.DLL V5.34.0.0
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      UL2CM3.DLL V1.163.9.0
+Dialog DLL:      TCM.DLL V1.48.0.0
+ 
+<h2>Project:</h2>
+E:\cources\embedded\ARM CAN STM32F303\KEIL CAN DEBUGGER\CAN.uvprojx
+Project File Date:  12/02/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.16', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
+Rebuild target 'Target 1'
+assembling startup_stm32f303c8tx.s...
+compiling stm32f3xx_hal_exti.c...
+compiling stm32f3xx_hal.c...
+compiling stm32f3xx_hal_cortex.c...
+main.c(175): warning: '/*' within block comment [-Wcomment]
+  /* USER CODE BEGIN CAN_Init 0 */
+  ^
+main.c(198): warning: '/*' within block comment [-Wcomment]
+  /* USER CODE BEGIN CAN_Init 2 */
+  ^
+2 warnings generated.
+compiling main.c...
+compiling stm32f3xx_hal_dma.c...
+CAN_Program.c(285): warning: expression result unused [-Wunused-value]
+                *FREE_MAILBOX_COUNT++;
+                ^~~~~~~~~~~~~~~~~~~~~
+CAN_Program.c(289): warning: expression result unused [-Wunused-value]
+                *FREE_MAILBOX_COUNT++;
+                ^~~~~~~~~~~~~~~~~~~~~
+CAN_Program.c(293): warning: expression result unused [-Wunused-value]
+                *FREE_MAILBOX_COUNT++;
+                ^~~~~~~~~~~~~~~~~~~~~
+CAN_Program.c(457): warning: incompatible integer to pointer conversion assigning to 'uint8_t *' (aka 'unsigned char *') from 'unsigned long' [-Wint-conversion]
+                FRAMES_NUM = CAN_INSTANCE->RF0R & CAN_RF0R_FMP0;
+                           ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+CAN_Program.c(461): warning: incompatible integer to pointer conversion assigning to 'uint8_t *' (aka 'unsigned char *') from 'unsigned long' [-Wint-conversion]
+                FRAMES_NUM = CAN_INSTANCE->RF1R & CAN_RF1R_FMP1;
+                           ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+5 warnings generated.
+compiling CAN_Program.c...
+compiling stm32f3xx_hal_flash.c...
+compiling stm32f3xx_hal_gpio.c...
+compiling stm32f3xx_hal_flash_ex.c...
+compiling stm32f3xx_hal_msp.c...
+compiling stm32f3xx_hal_pwr.c...
+compiling stm32f3xx_hal_i2c_ex.c...
+compiling stm32f3xx_hal_pwr_ex.c...
+compiling stm32f3xx_hal_rcc_ex.c...
+compiling stm32f3xx_hal_rcc.c...
+sysmem.c(30): error: use of undeclared identifier 'NULL'
+static uint8_t *__sbrk_heap_end = NULL;
+                                  ^
+sysmem.c(53): error: unknown type name 'ptrdiff_t'
+void *_sbrk(ptrdiff_t incr)
+            ^
+sysmem.c(63): error: use of undeclared identifier 'NULL'
+  if (NULL == __sbrk_heap_end)
+      ^
+3 errors generated.
+compiling sysmem.c...
+compiling stm32f3xx_it.c...
+compiling system_stm32f3xx.c...
+syscalls.c(24): warning: In file included from...
+./stat.h(8): error: '_ansi.h' file not found
+#include <_ansi.h>
+         ^~~~~~~~~
+1 error generated.
+compiling syscalls.c...
+compiling stm32f3xx_hal_i2c.c...
+".\Objects\CAN.axf" - 4 Error(s), 7 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F3xx_DFP.2.2.2.pack
+                Keil.STM32F3xx_DFP.2.2.2
+                STMicroelectronics STM32F3 Series Device Support and Examples
+
+<h2>Collection of Component include folders:</h2>
+  C:\Users\LENOVO\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.2.2\Drivers\CMSIS\Device\ST\STM32F3xx\Include
+
+<h2>Collection of Component Files used:</h2>
+Target not created.
+Build Time Elapsed:  00:00:04
+</pre>
+</body>
+</html>

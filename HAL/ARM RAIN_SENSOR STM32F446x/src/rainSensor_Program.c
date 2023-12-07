@@ -1,4 +1,6 @@
 #include "rainSensor_Interface.h"
+#include "RCC_Interface.h"
+#include "RCC_Private.h"
 //#include "ErrTypes.h"
 
 ERRORS_t rainSensorvInit(void)
@@ -6,6 +8,9 @@ ERRORS_t rainSensorvInit(void)
 	ERRORS_t error= NOK;
 
 	GPIO_PinConfig_t rainSensorConfig ={RAIN_STATUS_PIN,RAIN_STATUS_GPIO,RAIN_STATUS_MODE,RAIN_STATUS_SPEED,RAIN_STATUS_OutputType,RAIN_STATUS_PULLTYPE,RAIN_STATUS_AF};
+
+	RCC_AHB1EnableCLK(RAIN_PORT_EN);
+
 	if(RAIN_STATUS_GPIO>PORTH||RAIN_STATUS_GPIO<PORTA||RAIN_STATUS_PIN>PIN15||RAIN_STATUS_PIN<PIN0)
 	{
 		error=NOK;

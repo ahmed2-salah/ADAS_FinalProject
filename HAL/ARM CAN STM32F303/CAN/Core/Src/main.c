@@ -74,18 +74,18 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
 
-  /* USER CODE END SysInit */
+
 
   /* Initialize all configured peripherals */
-  HAL_MspInit();
+
   HAL_CAN_MspInit();
   MX_GPIO_Init();
   //MX_CAN_Init();
-  S_CAN_INIT_CONFIG initConfig={LOOPBACK_MODE,ENABLE,DISABLE,DISABLE,ENABLE,DISABLE};
+  S_CAN_INIT_CONFIG initConfig={LOOPBACK_SILENT_MODE,ENABLE,DISABLE,DISABLE,ENABLE,DISABLE};
   S_CAN_BITIME_CONFIG bitime={PRESCALER_32,TS1_Q,TS2_Q};
   s_filterxConfig FILTERX_CONFIG={MSK_MODE,SINGLE_32,FIFO0,ENABLE,0X0000,0X123<<5,0X0000,0X123<<5,10};
-  S_CAN_TXFRAME TX_FRAME={STD_ID,0X123,0,1,1,DISABLE};
-  uint8_t DATA_TX[8]={'A'};
+  S_CAN_TXFRAME TX_FRAME={STD_ID,0X123,0,1,8,DISABLE};
+  uint8_t DATA_TX[8]={'H','E','L','L','O','.','.','.'};
   uint8_t MAILBOX_CODE;
   /*initialize the can */
   HAL_CAN_vInit(&initConfig,&bitime);
@@ -103,18 +103,25 @@ int main(void)
   {		//wait until data is no longer pending
 	  HAL_CAN_u8IS_TXFRAME_PENDING(&status,MAILBOX_CODE);
   }
-  while(status==0);
+  while(status==1);
   S_CAN_RXFRAME RX_FRAME;
   uint8_t DATA_RX[8];
   uint8_t FRAMES_NUM;
  do
- {	//recieve the data in FIFO0 queue
+ {	//receive the data in FIFO0 queue
 	 HAL_CAN_psRXFRAME(&RX_FRAME, DATA_RX,FIFO0);
 	 //wait until FIFO0 no longer carry frames
 	 HAL_CAN_RX_FRAMES_NUM(FIFO0,&FRAMES_NUM);
 
  }while(FRAMES_NUM!=0);
 
+ /*GPIO_TypeDef GPIOx;
+
+ if(DATA_RX[0]=='A')
+ {
+	 LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
+ }*/
+ /* USER CODE END SysInit */
   while (1)
   {
     /* USER CODE END WHILE */
@@ -135,7 +142,7 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;//internal RC clk
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;

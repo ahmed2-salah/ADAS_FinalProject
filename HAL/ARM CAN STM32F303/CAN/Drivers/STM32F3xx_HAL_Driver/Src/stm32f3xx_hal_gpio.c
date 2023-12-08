@@ -185,7 +185,7 @@ void HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init)
     /* Get current io position */
     iocurrent = (GPIO_Init->Pin) & (1uL << position);
 
-    if (iocurrent != 0x00u)
+    if (iocurrent != 0x00u)/*pin_10 nit_0=0*/
     {
       /*--------------------- GPIO Mode Configuration ------------------------*/
       /* In case of Output or Alternate function mode selection */

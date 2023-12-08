@@ -32,7 +32,7 @@ void HAL_CAN_ENTER_INIT_MODE(void)
 	//for software initialization
 	SET_BIT(CAN_INSTANCE->MCR,CAN_MCR_INRQ);//SET INREQ BIT
 	//WAIT FOR THE FLAG RAISING
-	while((READ_BIT(CAN_INSTANCE->MSR, CAN_MSR_INAK)>>CAN_MSR_INAK)==LOW);
+	while((READ_BIT(CAN_INSTANCE->MSR, CAN_MSR_INAK)>>CAN_MSR_INAK_Pos)==LOW);
 	//LEAVE SLEEP MODE
 	HAL_CAN_LEAVE_SLEEP_MODE();
 
@@ -147,12 +147,12 @@ void HAL_CAN_pu8TXFRAME(S_CAN_INIT_CONFIG* initConfig,S_CAN_TXFRAME* TX_FRAME, u
 		if(TX_FRAME->ID_TYPE==STD_ID)
 		{
 			//fill all mailbox registers
-			CAN_INSTANCE->sTxMailBox[*MAILBOX_CODE].TIR=(TX_FRAME->ID_TYPE)|(TX_FRAME->StdId)|(TX_FRAME->RTR);
+			CAN_INSTANCE->sTxMailBox[*MAILBOX_CODE].TIR=(TX_FRAME->ID_TYPE)|((TX_FRAME->StdId)<<STDID_Pos)|((TX_FRAME->RTR)>>RTR_Pos);
 		}
 		else
 		{
 			SET_BIT(CAN_INSTANCE->sTxMailBox[*MAILBOX_CODE].TIR,CAN_TI0R_IDE);
-			CAN_INSTANCE->sTxMailBox[*MAILBOX_CODE].TIR=(TX_FRAME->ExtId)|(TX_FRAME->RTR);//fill all mailbox reigsters
+			CAN_INSTANCE->sTxMailBox[*MAILBOX_CODE].TIR=((TX_FRAME->ExtId)>>EXTID_Pos)|((TX_FRAME->RTR)>>RTR_Pos);//fill all mailbox reigsters
 		}
 		/*****************************************************************************************************************/
 
@@ -298,13 +298,13 @@ void HAL_CAN_u8GetFreeMailbox(uint8_t* FREE_MAILBOX_COUNT)
 
 void HAL_CAN_u8IS_TXFRAME_PENDING(uint8_t* pendingStatus,uint8_t MAILBOX_CODE)
 {
-	*pendingStatus=0;
+	*pendingStatus=1;
 
 	uint32_t MASK= CAN_TSR_TME0<<MAILBOX_CODE;
 
 	if((READ_BIT(CAN_INSTANCE->TSR,MASK)>>(MAILBOX_CODE+CAN_TSR_TME0_Pos))!=0)
 	{
-		*pendingStatus=1;
+		*pendingStatus=0;
 	}
 }
 
@@ -451,7 +451,7 @@ void HAL_CAN_psRXFRAME(S_CAN_RXFRAME* RX_FRAME, uint8_t DATA[],E_FILTER_ASSIGN R
 
 void HAL_CAN_RX_FRAMES_NUM(E_FILTER_ASSIGN RX_FIFO,uint8_t* FRAMES_NUM)
 {
-	FRAMES_NUM=0;
+	*FRAMES_NUM=0;
 	if(RX_FIFO==FIFO0)
 	{
 		FRAMES_NUM = CAN_INSTANCE->RF0R & CAN_RF0R_FMP0;

@@ -11,10 +11,13 @@
 #include "CAN_Types.h"
 #include "CAN_Private.h"
 
-#define TS1_Q	1
-#define TS2_Q	2
-#define HIGH	1
-#define LOW		0
+#define TS1_Q		1
+#define TS2_Q		2
+#define HIGH		1
+#define LOW			0
+#define STDID_Pos   21UL
+#define RTR_Pos		2UL
+#define EXTID_Pos	3UL
 /*
  * brief: Enter the normal mode to have access on the CAN bus
  * called after the initialization or debug mode or to leave sleep mode to normal mode

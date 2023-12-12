@@ -1,0 +1,186 @@
+#include <stdint.h>
+#include "math.h"
+#include "ErrTypes.h"
+#include "STM32F446xx.h"
+#include "RCC_Interface.h"
+#include "GPIO_Interface.h"
+#include "SCB_Interface.h"
+#include "NVIC_Interface.h"
+#include "UART_Interface.h"
+#include "Bluetooth_interface.h"
+int main ()
+{
+	Bluetooth_init();
+	while(1)
+	{
+		Bluetooth_void_GetReading();
+
+	}
+	return 0 ;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//#define NUM_OF_USART_PINS  2
+//
+//void LED_ONOFF(void);
+//void USART1_Init(void);
+//UART_Config_t * UART_CONFIG ;
+//uint8_t Reading=0;
+//
+//int main (void)
+//{
+//
+//	//uint8_t receivingdata ;
+// 	RCC_AHB1EnableCLK(GPIOAEN);
+//
+//	RCC_APB2EnableCLK(USART1EN);
+//
+//	NVIC_EnableIRQ(USART1_IRQ);
+//
+//	SCB_VoidSetPriorityGroup(GP_2_SP_8);
+//	/* Set UART1 to Group Priority Zero*/
+//	NVIC_SetPriority(USART1_IRQ, 0);
+//
+//	GPIO_PinConfig_t LEDPIN = {.AltFunc=AF0,.Mode=OUTPUT,.OutputType=PUSH_PULL,.PinNum=PIN5,.Port=PORTA,.Speed=LOW_SPEED};
+//	GPIO_u8PinInit(&LEDPIN);
+//	/* USART1 GPIO Pins Configuration Working in Full Duplex */
+//	GPIO_PinConfig_t USART1_Pins[NUM_OF_USART_PINS] =
+//	{
+//			/* USART1 Tx Pin */
+//			{.AltFunc = AF7, .Mode = ALTERNATE_FUNCTION, .OutputType = PUSH_PULL, .PinNum = PIN9, .Port = PORTA, .PullType = NO_PULL, .Speed = LOW_SPEED},
+//			/* USART1 Rx Pin */
+//			{.AltFunc = AF7, .Mode = ALTERNATE_FUNCTION, .OutputType = PUSH_PULL, .PinNum = PIN10, .Port = PORTA, .PullType = NO_PULL, .Speed = LOW_SPEED}};
+//
+//	/* Initializing USART1 Pins */
+//	GPIO_u8PinsInit(USART1_Pins, NUM_OF_USART_PINS);
+//	USART1_Init();
+//
+//	UART_u16ReceiveIT(UART_CONFIG, &Reading);
+//
+//
+//	while(1)
+//	{
+//		LED_ONOFF();
+//	}
+//	return 0 ;
+//}
+//
+//void USART1_Init(void)
+//{
+//	/* USART1 Interrupts Configuration */
+//	static UART_Interrupts_t USART2Interrupts =
+//	{
+//			.IDLE = UART_Disable, .PE = UART_Disable, .RXN = UART_Enable, .TC = UART_Disable, .TX = UART_Disable
+//
+//	};
+//
+//	/* USART1 Configuration */
+//	static UART_Config_t USART1Config =
+//	{
+//			.UART_ID = UART_1, .BaudRate = BaudRate_9600, .Direction = RXN, .OverSampling = OverSamplingBy16, .ParityState = UART_Disable, .StopBits = OneStopBit, .WordLength = _8Data, .Interrupts = &USART2Interrupts};
+//
+//	/* USART1 Initialization */
+//	UART_voidInit(&USART1Config);
+//
+//	/* Initialize UART Struct Globally */
+//	UART_CONFIG = &USART1Config;
+//}
+//
+//void LED_ONOFF(void)
+//{
+//	if(Reading=='F')
+//	{
+//		GPIO_u8SetPinValue(PORTA, PIN5, PIN_HIGH);
+//	}
+//	else if (Reading== 'G')
+//	{
+//		GPIO_u8SetPinValue(PORTA, PIN5, PIN_LOW);
+//
+//	}
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

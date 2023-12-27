@@ -61,24 +61,8 @@
  */
 #define MOTORDRIVER_IN4   PIN1
 
-/**
- * @brief TIM_HandleTypeDef structure for PWM output channel 1.
- *
- * This structure defines the configuration parameters for the timer used for PWM output channel 1.
- */
-TIM_HandleTypeDef PWM_htim31 = {
-		.Instance =  TIM3,
-		.Channel = TIM_CHANNEL_1,     // PORTA And Pin 6
-};
 
-/**
- * @brief TIM_HandleTypeDef structure for PWM output channel 2.
- *
- * This structure defines the configuration parameters for the timer used for PWM output channel 2.
- */
-TIM_HandleTypeDef PWM_htim32 = {
-		.Instance =  TIM3,
-		.Channel = TIM_CHANNEL_2,		// PORTA And Pin 7
-};
+
+
 
 #endif /* HAL_MOTORDRIVER_MOTORDRIVER_CONFIG_H_ */

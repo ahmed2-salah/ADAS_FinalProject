@@ -22,28 +22,28 @@ void MotorDriver_voidInit(void);
  *
  * This function moves the motors forward.
  */
-void MotorDriver_voidMoveForward(void);
+void MotorDriver_voidMoveForward(uint8_t x);
 
 /**
  * @brief Moves the motors backward.
  *
  * This function moves the motors backward.
  */
-void MotorDriver_voidMoveBackward(void);
+void MotorDriver_voidMoveBackward(uint8_t z);
 
 /**
  * @brief Turns the motors right.
  *
  * This function turns the motors right.
  */
-void MotorDriver_voidMoveRight(void);
+void MotorDriver_voidMoveRight(uint8_t x,uint8_t y);
 
 /**
  * @brief Turns the motors left.
  *
  * This function turns the motors left.
  */
-void MotorDriver_voidMoveLeft(void);
+void MotorDriver_voidMoveLeft(uint8_t x,uint8_t y);
 
 /**
  * @brief Stops the motors.

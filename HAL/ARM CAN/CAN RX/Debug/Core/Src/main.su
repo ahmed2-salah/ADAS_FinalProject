@@ -1,6 +1,0 @@
-../Core/Src/main.c:66:5:main	80	static
-../Core/Src/main.c:166:6:SystemClock_Config	88	static
-../Core/Src/main.c:214:13:MX_GPIO_Init	32	static
-../Core/Src/main.c:234:13:MX_GPIOBY_Init	32	static
-../Core/Src/main.c:254:13:MX_GPIOBG_Init	32	static
-../Core/Src/main.c:283:6:Error_Handler	4	static,ignoring_inline_asm

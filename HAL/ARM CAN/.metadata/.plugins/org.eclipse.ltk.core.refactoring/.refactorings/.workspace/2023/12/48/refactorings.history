@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete 2 resources" deleteContents="false" description="Delete 2 resources" element1="/CAN/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_can.h" element2="/CAN/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_can.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="2" stamp="1701498301213"/>
-</session>

@@ -1,14 +1,14 @@
 /*
  ******************************************************************************
  * @file           : GPIO_Program.c
- * @Author         : Hassan_Elgabas
+ * @Author         : AutoPots
  * @brief          : GPIO Main Source File
  * @Date           : May 5, 2023
  * @Target     	   : STM32F446xx
  ******************************************************************************
  * @attention
  *
- * Copyright (c) 2023 Ayman.
+ * Copyright (c) 2023 .
  * All rights reserved.
  *
  ******************************************************************************

@@ -4,7 +4,7 @@
  *
  * This file provides the interface for the HC-SR04 ultrasonic sensor.
  *
- * @author Ahmed Abu Raya
+ * @author Autopots
  * @date 2023-06-20
  */
 

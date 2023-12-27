@@ -2,8 +2,8 @@
  * @file HCSR04_Config.h
  * @brief Configuration file for the HC-SR04 ultrasonic sensor.
  *
- * @author Ahmed Abu Raya
- * @date 2023-06-20
+ * @author AUTOPOTS
+ * 
  */
 
 #ifndef HCSR04_CFG_H_

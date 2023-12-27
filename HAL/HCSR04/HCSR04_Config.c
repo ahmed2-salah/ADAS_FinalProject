@@ -2,8 +2,8 @@
  * @file HCSR04_Config.c
  * @brief Source file for the HC-SR04 ultrasonic sensor configurations.
  *
- * @author Ahmed Abu Raya
- * @date 2023-06-20
+ * 
+ * 
  */
 
 /**

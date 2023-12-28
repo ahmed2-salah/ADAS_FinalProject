@@ -37,6 +37,7 @@ ADAS refers to a set of technologies and systems designed to assist drivers in t
 * STM32CubeProgrammer
 * Git & GitHub
 * Keil
+* Open SSL
 * draw.io
 * Doxygen
 * Jira

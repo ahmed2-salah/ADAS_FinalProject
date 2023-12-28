@@ -11,7 +11,7 @@ ADAS refers to a set of technologies and systems designed to assist drivers in t
   * Lane Departure Warning (LDW) ⚠ : Alerts the driver when the vehicle unintentionally drifts out of its lane.
 
 ## Other Project Features
-1. Displaying vehicle speed and driving mode on attractive Infotainment system created using python. Developed on Linux ubuntu OS.
+1. Displaying vehicle speed and driving mode on attractive Infotainment system (GUI) created using python. Developed on Linux ubuntu OS.
 
 2. Updating the software using FOTA 🌐 (Flash Over The Air) for any ECU
    * Implemented Bootloader for STM32F446RE based on CAN.
